@@ -34,3 +34,4 @@ This project is designed to serve as a **backend foundation** for larger applica
 - **Version Control:** Git & GitHub  
 
 ---
+# ⚠️ Still not complete. Further features and security enhancements will be added in future updates.
