@@ -38,3 +38,17 @@ exports.login = async (req, res) => {
 
   res.json({ accessToken, refreshToken });
 };
+exports.refreshToken = async (req, res) => {
+  const { token } = req.body;
+  if (!token) return res.status(400).json({ message: "Refresh token required" });
+
+  try {
+    const newRefreshToken = await rotateRefreshToken(token, pool);
+    const decoded = jwt.verify(newRefreshToken, process.env.JWT_REFRESH_SECRET);
+    const accessToken = generateAccessToken({ id: decoded.id });
+
+    res.json({ accessToken, refreshToken: newRefreshToken });
+  } catch (err) {
+    res.status(401).json({ message: "Invalid refresh token" });
+  }
+};
